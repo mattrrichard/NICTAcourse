@@ -194,9 +194,9 @@ compiler error.
 It is recommended to perform some exercises before others. The first step is to
 inspect the introduction modules.
 
-* `Course.Id`
-* `Course.Optional`
-* `Course.Validation`
+- [x] `Course.Id`
+- [x] `Course.Optional`
+- [x] `Course.Validation`
 
 They contain examples of data structures and Haskell syntax. They do not contain
 exercises and exist to provide a cursory examination of Haskell syntax. The next
@@ -204,24 +204,24 @@ step is to complete the exercises in `Course.List`.
 
 After this, the following progression of modules is recommended:
 
-* `Course.Functor`
-* `Course.Applicative`
-* `Course.Monad` (please see [this issue](https://github.com/NICTA/course/issues/118))
-* `Course.FileIO`
-* `Course.State`
-* `Course.StateT`
-* `Course.Extend`
-* `Course.Comonad`
-* `Course.Compose`
-* `Course.Traversable`
-* `Course.ListZipper`
-* `Course.Parser` *(see also `Course.Person` for the parsing rules)*
-* `Course.MoreParser`
-* `Course.JsonParser`
-* `Course.Interactive`
-* `Course.Anagrams`
-* `Course.FastAnagrams`
-* `Course.Cheque`
+- [x] `Course.Functor`
+- [x] `Course.Applicative`
+- [x] `Course.Monad` (please see [this issue](https://github.com/NICTA/course/issues/118))
+- [ ] `Course.FileIO`
+- [ ] `Course.State`
+- [ ] `Course.StateT`
+- [ ] `Course.Extend`
+- [ ] `Course.Comonad`
+- [ ] `Course.Compose`
+- [ ] `Course.Traversable`
+- [ ] `Course.ListZipper`
+- [ ] `Course.Parser` *(see also `Course.Person` for the parsing rules)*
+- [ ] `Course.MoreParser`
+- [ ] `Course.JsonParser`
+- [ ] `Course.Interactive`
+- [ ] `Course.Anagrams`
+- [ ] `Course.FastAnagrams`
+- [ ] `Course.Cheque`
 
 During this progression, it is often the case that some exercises are abandoned
 due to time constraints and the benefit of completing some exercises over
