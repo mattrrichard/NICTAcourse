@@ -59,43 +59,44 @@ the contents of c
 -}
 
 -- /Tip:/ use @getArgs@ and @run@
-main ::
-  IO ()
+main :: IO ()
 main =
-  error "todo: Course.FileIO#main"
+  getArgs
+  >>= \args ->
+    case args of
+      file :. Nil -> run file
+      _ -> return ()
 
 type FilePath =
   Chars
 
 -- /Tip:/ Use @getFiles@ and @printFiles@.
-run ::
-  Chars
-  -> IO ()
-run =
-  error "todo: Course.FileIO#run"
+run :: Chars -> IO ()
+run file =
+  getFile file
+  >>= getFiles . lines . snd
+  >>= printFiles
 
-getFiles ::
-  List FilePath
-  -> IO (List (FilePath, Chars))
+getFiles :: List FilePath -> IO (List (FilePath, Chars))
 getFiles =
-  error "todo: Course.FileIO#getFiles"
+  mapM getFile
 
-getFile ::
-  FilePath
-  -> IO (FilePath, Chars)
-getFile =
-  error "todo: Course.FileIO#getFile"
+getFile :: FilePath -> IO (FilePath, Chars)
+getFile path =
+  (,) <$> return path <*> readFile path
 
-printFiles ::
-  List (FilePath, Chars)
-  -> IO ()
-printFiles =
-  error "todo: Course.FileIO#printFiles"
+printFiles :: List (FilePath, Chars) -> IO ()
+printFiles files =
+  void $ mapM (uncurry printFile) files
 
-printFile ::
-  FilePath
-  -> Chars
-  -> IO ()
-printFile =
-  error "todo: Course.FileIO#printFile"
+ -- Monad m => (a -> m b) -> [a] -> m [b]
+mapM :: Monad f => (a -> f b) -> List a -> f (List b)
+mapM f = sequence . map f
+
+printFile :: FilePath -> Chars -> IO ()
+printFile path content=
+  putStr "================"
+  >> putStr path
+  >> putStr "\n"
+  >> putStr content
 
