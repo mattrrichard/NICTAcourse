@@ -125,15 +125,6 @@ findM p (x :. xs) =
         k False = findM p xs
 
 
-filterM :: Monad f => (a -> f Bool) -> List a -> f (List a)
-filterM _ Nil = pure Nil
-filterM p (x :. xs) =
-  p x >>= k
-  where
-    k True = lift2 (:.) (pure x) (filterM p xs)
-    k False = filterM p xs
-
-
 -- | Find the first element in a `List` that repeats.
 -- It is possible that no element repeats, hence an `Optional` result.
 --
@@ -159,7 +150,7 @@ testAdd test a =
 -- prop> distinct xs == distinct (flatMap (\x -> x :. x :. Nil) xs)
 distinct :: Ord a => List a -> List a
 distinct =
-  (`eval` S.empty) . filterM (testAdd S.notMember)
+  (`eval` S.empty) . filtering (testAdd S.notMember)
 
 -- | A happy number is a positive integer, where the sum of the square of its digits eventually reaches 1 after repetition.
 -- In contrast, a sad number (not a happy number) is where the sum of the square of its digits never reaches 1
