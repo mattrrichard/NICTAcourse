@@ -13,25 +13,17 @@ import Course.List
 import Course.Optional
 
 -- | Eliminates any value over which a functor is defined.
-vooid ::
-  Functor m =>
-  m a
-  -> m ()
+vooid :: Functor m => m a -> m ()
 vooid =
   (<$>) (const ())
 
 -- | A version of @bind@ that ignores the result of the effect.
-(>-) ::
-  Monad m =>
-  m a
-  -> m b
-  -> m b
+(>-) :: Monad m => m a -> m b -> m b
 (>-) a =
   (>>=) a . const
 
 -- | Runs an action until a result of that action satisfies a given predicate.
-untilM ::
-  Monad m =>
+untilM :: Monad m =>
   (a -> m Bool) -- ^ The predicate to satisfy to stop running the action.
   -> m a -- ^ The action to run until the predicate satisfies.
   -> m a
@@ -45,8 +37,7 @@ untilM p a =
       untilM p a
 
 -- | Example program that uses IO to echo back characters that are entered by the user.
-echo ::
-  IO ()
+echo :: IO ()
 echo =
   vooid (untilM
           (\c ->
@@ -80,10 +71,12 @@ data Op =
 -- /Tip:/ @putStr :: String -> IO ()@ -- Prints a string to standard output.
 --
 -- /Tip:/ @putStrLn :: String -> IO ()@ -- Prints a string and then a new line to standard output.
-convertInteractive ::
-  IO ()
+convertInteractive :: IO ()
 convertInteractive =
-  error "todo: Course.Interactive#convertInteractive"
+  do
+    putStr "Enter a string to ucase: "
+    str <- getLine
+    putStrLn (toUpper <$> str)
 
 -- |
 --
@@ -108,10 +101,17 @@ convertInteractive =
 -- /Tip:/ @putStr :: String -> IO ()@ -- Prints a string to standard output.
 --
 -- /Tip:/ @putStrLn :: String -> IO ()@ -- Prints a string and then a new line to standard output.
-reverseInteractive ::
-  IO ()
+reverseInteractive :: IO ()
 reverseInteractive =
-  error "todo: Course.Interactive#reverseInteractive"
+  do
+    putStr "Enter a file to reverse: "
+    file <- getLine
+    putStr "Enter output file: "
+    output <- getLine
+
+    content <- readFile file
+
+    writeFile output (reverse content)
 
 -- |
 --
@@ -134,16 +134,27 @@ reverseInteractive =
 -- /Tip:/ @putStr :: String -> IO ()@ -- Prints a string to standard output.
 --
 -- /Tip:/ @putStrLn :: String -> IO ()@ -- Prints a string and then a new line to standard output.
-encodeInteractive ::
-  IO ()
+encodeInteractive :: IO ()
 encodeInteractive =
-  error "todo: Course.Interactive#encodeInteractive"
+  do
+    putStr "Enter a string to url-encode: "
+    str <- getLine
+    putStrLn (urlEncode str)
 
-interactive ::
-  IO ()
+
+urlEncode :: Chars -> Chars
+urlEncode =
+  foldRight replace ""
+  where
+    replace c cs
+      | c == ' ' = "%20" ++ cs
+      | c == '\t'= "%09" ++ cs
+      | c == '\"'= "%22" ++ cs
+      | otherwise = c :. cs
+
+interactive :: IO ()
 interactive =
-  let ops = (
-               Op 'c' "Convert a string to upper-case" convertInteractive
+  let ops = (  Op 'c' "Convert a string to upper-case" convertInteractive
             :. Op 'r' "Reverse a file" reverseInteractive
             :. Op 'e' "Encode a URL" encodeInteractive
             :. Op 'q' "Quit" (pure ())

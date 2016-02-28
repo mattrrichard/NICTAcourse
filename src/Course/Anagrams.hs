@@ -25,20 +25,19 @@ Functions that might help
 
 -}
 
+anagrams' :: Chars -> List Chars -> List Chars
+anagrams' word dictionary =
+  intersectBy equalIgnoringCase dictionary (permutations word)
+
 
 -- Return all anagrams of the given string
 -- that appear in the given dictionary file.
-anagrams ::
-  Chars
-  -> Filename
-  -> IO (List Chars)
-anagrams =
-  error "todo: Course.Anagrams#anagrams"
+anagrams :: Chars -> Filename -> IO (List Chars)
+anagrams word dictPath =
+  anagrams' word . lines <$> readFile dictPath
+
 
 -- Compare two strings for equality, ignoring case
-equalIgnoringCase ::
-  Chars
-  -> Chars
-  -> Bool
+equalIgnoringCase :: Chars -> Chars -> Bool
 equalIgnoringCase =
-  error "todo: Course.Anagrams#equalIgnoringCase"
+  (==) `on` map toLower

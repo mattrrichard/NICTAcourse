@@ -10,12 +10,14 @@ import qualified Data.Set as S
 
 -- Return all anagrams of the given string
 -- that appear in the given dictionary file.
-fastAnagrams ::
-  Chars
-  -> Filename
-  -> IO (List Chars)
-fastAnagrams =
-  error "todo: Course.FastAnagrams#fastAnagrams"
+fastAnagrams :: Chars -> Filename -> IO (List Chars)
+fastAnagrams word dictPath =
+  anagrams word . S.fromList . hlist .lines <$> readFile dictPath
+
+anagrams :: Chars -> S.Set Chars -> List Chars
+anagrams word dictionary =
+  filter (`S.member` dictionary) (permutations word)
+
 
 newtype NoCaseString =
   NoCaseString {

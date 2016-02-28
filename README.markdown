@@ -218,9 +218,9 @@ After this, the following progression of modules is recommended:
 - [x] `Course.Parser` *(see also `Course.Person` for the parsing rules)*
 - [x] `Course.MoreParser`
 - [x] `Course.JsonParser`
-- [ ] `Course.Interactive`
-- [ ] `Course.Anagrams`
-- [ ] `Course.FastAnagrams`
+- [x] `Course.Interactive`
+- [x] `Course.Anagrams`
+- [x] `Course.FastAnagrams`
 - [ ] `Course.Cheque`
 
 During this progression, it is often the case that some exercises are abandoned
